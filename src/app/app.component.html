@@ -1,49 +1,21 @@
 <div class="vh-100 p-5">
-  <form [formGroup]="form" class="h-25 p-5">
-    <div class="d-flex justify-content-between w-100 mb-3">
-      <div class="d-flex w-25 flex-column">
-        <input formControlName="starships" id="starships" type="text" placeholder="Starships"
-               class="form-control" [class.is-invalid]="form.touched && form.controls.starships.invalid"
-               aria-label="Search for a starship"/>
-        <div class="invalid-feedback">
-          Min 3 characters
-        </div>
-      </div>
-
-      <div class="d-flex w-25 flex-column">
-        <input formControlName="people" id="people" type="text" placeholder="People"
-               class="form-control"
-               [class.is-invalid]="form.touched && form.controls.people.invalid"
-               aria-label="Search for a person"/>
-        <div class="invalid-feedback">
-          Min 3 characters
-        </div>
-      </div>
-
-      <div class="d-flex w-25 flex-column">
-        <input formControlName="vehicles" id="vehicle" type="text" placeholder="Vehicles"
-               class="form-control" [class.is-invalid]="form.touched && form.controls.vehicles.invalid"
-               aria-label="Search for a vehicles"/>
-        <div class="invalid-feedback">
-          Min 3 characters
-        </div>
-      </div>
-
-
-    </div>
-
+  <div class="h-25">
+    <app-search-form [form]="form"></app-search-form>
+    
     <div class="d-flex justify-content-end">
-      <button type="button" class="btn btn-primary btn-sm" (click)="searchInMovies()" [disabled]="form.invalid || form.pristine">
+      <button type="button" class="btn btn-primary btn-sm" (click)="searchInMovies()"
+              [disabled]="form.invalid || form.pristine">
         Search
       </button>
     </div>
-  </form>
-
+  </div>
 
   <div class="h-75 d-flex gap-4 flex-wrap justify-content-center">
 
     @for (movie of this.movies(); track movie.episode_id) {
-      <div class="card w-25 mh-75 overflow-hidden border-4" style="height: 250px;" [class.border-success]="this.searchData().includes(movie.url)">
+
+      <div class="card w-25 mh-75 overflow-hidden border-4" style="height: 250px;"
+           [class.border-success]="this.searchData().includes(movie.url)">
         <div class="card-body border-3 border-primary">
           <h3 class="card-title">{{ movie.title }}</h3>
           <p class="card-subtitle mb-2 text-muted">Episode: {{ movie.episode_id }}</p>
@@ -52,9 +24,8 @@
           <p class="card-subtitle mb-2 text-muted">Director: {{ movie.director }}</p>
         </div>
       </div>
+
     }
 
   </div>
-
-
 </div>

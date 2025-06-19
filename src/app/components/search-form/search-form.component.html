@@ -1,0 +1,12 @@
+<form [formGroup]="form()" class="d-flex justify-content-between w-100 mb-3">
+    @for (control of this.controls(); track $index) {
+      <div class="d-flex w-25 flex-column">
+        <input [formControlName]="control" [id]="control" type="text" [placeholder]="control"
+               class="form-control" [class.is-invalid]="form().touched && form().get([control])?.invalid"
+               [attr.aria-label]="'Search for ' + control"/>
+        <div class="invalid-feedback">
+          Min 3 characters
+        </div>
+      </div>
+    }
+</form>

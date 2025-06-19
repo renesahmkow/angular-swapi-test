@@ -1,16 +1,22 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {ApiConnectionService} from './services/api-connection.service';
 import {Movie} from './models/starwars.models';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {SearchFormComponent} from './components/search-form/search-form.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [
     ReactiveFormsModule,
-    DatePipe
+    DatePipe,
+    SearchFormComponent
   ],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
@@ -32,11 +38,6 @@ export class AppComponent implements OnInit {
       this.movies.set(data.slice(0,-1))
     })
 
-    Object.entries(this.form.controls).forEach(([name, control]) => {
-      control.valueChanges.subscribe(() => {
-        this.handleValidation(name);
-      });
-    });
   }
 
   searchInMovies() {
@@ -57,26 +58,5 @@ export class AppComponent implements OnInit {
 
     return controlNameWithValue?.[0] as string
   }
-
-  handleValidation(activeControlName: string) {
-
-    if (!this.form.get(activeControlName)?.value) {
-      Object.values(this.form.controls).forEach(control => {
-        control.setValidators([Validators.required, Validators.minLength(3)]);
-        control.updateValueAndValidity({ emitEvent: false });
-      });
-    } else {
-      Object.entries(this.form.controls).forEach(([name, control]) => {
-        if (name === activeControlName) {
-          control.setValidators([Validators.required, Validators.minLength(3)]);
-        } else {
-          control.setValidators([Validators.minLength(3)]);
-          control.setValue(null, { emitEvent: false });
-        }
-        control.updateValueAndValidity({ emitEvent: false });
-      });
-    }
-  }
-
 
 }
