@@ -2,12 +2,14 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {ApiConnectionService} from './services/api-connection.service';
 import {Movie} from './models/starwars.models';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePipe
   ],
   styleUrl: './app.component.css'
 })
@@ -26,7 +28,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.#apiConnectionService.getAllMovies().subscribe(data => {
-      this.movies.set(data)
+
+      this.movies.set(data.slice(0,-1))
     })
 
     Object.entries(this.form.controls).forEach(([name, control]) => {

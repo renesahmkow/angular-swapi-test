@@ -1,4 +1,4 @@
-<div class="vh-100">
+<div class="vh-100 p-5">
   <form [formGroup]="form" class="h-25 p-5">
     <div class="d-flex justify-content-between w-100 mb-3">
       <div class="d-flex w-25 flex-column">
@@ -46,7 +46,10 @@
       <div class="card w-25 mh-75 overflow-hidden border-4" style="height: 250px;" [class.border-success]="this.searchData().includes(movie.url)">
         <div class="card-body border-3 border-primary">
           <h3 class="card-title">{{ movie.title }}</h3>
-          <p class="card-subtitle mb-2 text-muted">{{ movie.opening_crawl }}</p>
+          <p class="card-subtitle mb-2 text-muted">Episode: {{ movie.episode_id }}</p>
+          <p class="card-subtitle mb-2 text-muted">Release Date: {{ movie.release_date | date:'yyyy-MM-dd' }}</p>
+          <p class="card-subtitle mb-2 text-muted">Producer: {{ movie.producer }}</p>
+          <p class="card-subtitle mb-2 text-muted">Director: {{ movie.director }}</p>
         </div>
       </div>
     }
